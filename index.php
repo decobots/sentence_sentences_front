@@ -1,1 +1,0 @@
-<?php require('svelte/public/index.html') ;  ?>
