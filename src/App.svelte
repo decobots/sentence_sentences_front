@@ -32,61 +32,64 @@
 
     let errors = 12;
     var win = false;
-    var guessedLetters=[];
 
     function onGuess(event) {
         // resolve all correct letters
         let first = true;
-        for(let i=0;i<state.length-1;i++){
-            if (state[i].type==='letter' && state[i].value.toLowerCase()===event.detail.text.toLowerCase()){
-               state[i].correct=true;
-               if(first){
-                    // set flag to focus next input
-                   state[i].focus='next';
-                   first=false;
-               }
+        const pos = event.detail.position;
+
+        const correctGuess = state[pos].type==='letter' && state[pos].value.toLowerCase()===event.detail.text.toLowerCase();
+
+        if(correctGuess){
+            for(let i=0;i<state.length-1;i++){
+                if (state[i].type==='letter' && state[i].value.toLowerCase()===event.detail.text.toLowerCase()){
+                   state[i].correct=true;
+                   if(i>=pos && first){
+                        // set flag to focus next input
+                       state[i].focus='next';
+                       first=false;
+                   }
+                }
             }
-            else {
-                break;
-            }
-        }
-        if(!first){
-            for(let j=0;j<state.length-1;j++){
-                if (state[j].focus==='next'){
-                    state[j].focus=false;
-                    for(let k=j+1;k<state.length-1;k++){
-                            if (state[k].type==='letter' && state[k].correct===false){
-                               state[k].focus='autofocus';
-                                   break;
-                           }
-                    }
-                 break;
-               }
-            }
+            if(!first){
+                for(let j=pos;j<state.length-1;j++){
+                    if (state[j].focus==='next'){
+                        state[j].focus=false;
+                        for(let k=j+1;k<state.length-1;k++){
+                                if (state[k].type==='letter' && state[k].correct===false){
+                                   state[k].focus='autofocus';
+                                       break;
+                               }
+                        }
+                     break;
+                   }
+                }
+
+             }
 
          }
+        else {
+                     errors =errors-1;
 
-         state = state;
-         win = !Boolean(state.find(obj=> obj.correct===false));
+        }
+        state = state;
+             win = !Boolean(state.find(obj=> obj.correct===false));
     }
 
     function help(){
 
-
-        const old_length =new Set(guessedLetters).size;
         for(let i=0;i<line.length-1;i++){
-            const letter = line[i];
-            if (!letter.match(/[a-zA-zа-яА-Я]/i)){
-                continue;
-            }
-            guessedLetters= [...guessedLetters, letter];
+           if (state[i].type=='letter' && !state[i].correct)  {
+               var event=new Object();
+               event.detail = new Object();
+               event.detail.position=i;
+               event.detail.text=state[i].value;
+               onGuess(event);
+               errors=errors-1;
+               break;
 
-            const new_length = new Set(guessedLetters).size;
+           }
 
-            if (new_length>old_length){
-                errors-=1;
-                return;
-            }
         }
     }
 
@@ -109,10 +112,16 @@
 <p on:click={help}>help</p>
 <br/>
 <div class="text">
-<p>{line}</p>
-    {#each state as letter }
+
+    {#each state as letter,i }
             {#if letter.type=='letter'}
-                <Input answer={letter.value} correct={letter.correct} on:guess={onGuess} on:error={e=>{errors=errors-1}} focus={letter.focus}/>
+                <Input
+                answer={letter.value}
+                correct={letter.correct}
+                on:guess={onGuess}
+                on:error={e=>{errors=errors-1}}
+                focus={letter.focus}
+                position={i}/>
             {:else if letter.type=='punctuation'}
                 <Punctuation symbol={letter.value}/>
             {:else if letter.type=='whitespace'}

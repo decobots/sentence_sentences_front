@@ -2,12 +2,13 @@
     import { createEventDispatcher } from 'svelte';
 	export let answer = '';
 	export let correct= false;
+	export let position= 0;
 
 	export let focus = false;
 	let value='';
 	let hover = false;
 	const dispatch = createEventDispatcher();
-	$: if (value) {dispatch('guess',{text: value});}
+	$: if (value) {dispatch('guess',{text: value, position:position});}
     $: if(!hover && value && !((answer.toLowerCase()===value.toLowerCase()))) {value=''}
     let el;
 
