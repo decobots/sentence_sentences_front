@@ -1,14 +1,17 @@
 <script>
     import { createEventDispatcher } from 'svelte';
 	export let answer = '';
-	export let madeCorrect= false;
+	export let correct= false;
+
+	export let focus = false;
 	let value='';
 	let hover = false;
 	const dispatch = createEventDispatcher();
-	$: isCorrect = (answer.toLowerCase()===value.toLowerCase());
-	$: if (isCorrect && !madeCorrect) {dispatch('guess',{text: value.toLowerCase()});}
-	$: if (value && !isCorrect && !madeCorrect) {dispatch('error',{text: 'error made'});}
+	$: if (value) {dispatch('guess',{text: value});}
     $: if(!hover && value && !((answer.toLowerCase()===value.toLowerCase()))) {value=''}
+    let el;
+
+	$: if(focus && !correct){el.focus();}
 
 </script>
 <style>
@@ -64,9 +67,9 @@ input {
 
 </style>
 <div class="field">
-    {#if !(isCorrect || madeCorrect)}
+    {#if !correct}
         <input  maxlength="1" size="1" type="text" bind:value="{value}" on:focus={e=>{hover=true}}
-        on:focusout={e=>{hover=false}}>
+        on:focusout={e=>{hover=false}} bind:this={el}>
         <div class={hover ? 'line colorLine':'line'}/>
 
     {:else}

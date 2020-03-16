@@ -1,28 +1,81 @@
 <script>
-    import Word from './Word.svelte';
     import Space from './Space.svelte';
     import Hang from './Hang.svelte'
+    import Input from './Input.svelte';
+    import Punctuation from './Punctuation.svelte';
     import { onMount } from 'svelte';
-	var line = '';
+	let line = '';
     onMount(async () => {
 		const res = await fetch(`https://sentencesentences.herokuapp.com/quotes`);
 		line = await res.json();
 	});
 
+    let state = [];
+	$: {
 
-	$: dividedLine = line.split(' ');
-    let guessedLetters = [];
+	    for(let i=0;i<line.length;i++){
+            const symbol = line[i];
+            let type ='';
+            let correct = true;
+            if (symbol.match(/[a-zA-zа-яА-Я]/)){type='letter'; correct=false}
+            else if(symbol.match(/\s/)){ type='whitespace';}
+            else{type='punctuation';}
+            state[i] = {'type':type,
+                        'value':symbol,
+                        'correct':correct,
+                        'focus':false};
+	    }
+	   }
+
+
+
+
     let errors = 12;
+    var win = false;
+    var guessedLetters=[];
 
-    function addedGuessedLetter(event) {
-      guessedLetters = [...guessedLetters, event.detail.text];
+    function onGuess(event) {
+        // resolve all correct letters
+        let first = true;
+        for(let i=0;i<state.length-1;i++){
+            if (state[i].type==='letter' && state[i].value.toLowerCase()===event.detail.text.toLowerCase()){
+               state[i].correct=true;
+               if(first){
+                    // set flag to focus next input
+                   state[i].focus='next';
+                   first=false;
+               }
+            }
+            else {
+                break;
+            }
+        }
+        if(!first){
+            for(let j=0;j<state.length-1;j++){
+                if (state[j].focus==='next'){
+                    state[j].focus=false;
+                    for(let k=j+1;k<state.length-1;k++){
+                            if (state[k].type==='letter' && state[k].correct===false){
+                               state[k].focus='autofocus';
+                                   break;
+                           }
+                    }
+                 break;
+               }
+            }
+
+         }
+
+         state = state;
+         win = !Boolean(state.find(obj=> obj.correct===false));
     }
 
     function help(){
+
+
         const old_length =new Set(guessedLetters).size;
         for(let i=0;i<line.length-1;i++){
             const letter = line[i];
-            console.log(letter);
             if (!letter.match(/[a-zA-zа-яА-Я]/i)){
                 continue;
             }
@@ -52,13 +105,18 @@
         width: 80vw;
     }
 </style>
-<Hang {errors}/>
+<Hang {errors} {win}/>
 <p on:click={help}>help</p>
 <br/>
 <div class="text">
-
-    {#each dividedLine as word }
-		<Word word={word} on:guess={addedGuessedLetter} on:error={e=>{errors=errors-1}} guessedLetters={guessedLetters}/>
-		<Space/>
-	{/each}
+<p>{line}</p>
+    {#each state as letter }
+            {#if letter.type=='letter'}
+                <Input answer={letter.value} correct={letter.correct} on:guess={onGuess} on:error={e=>{errors=errors-1}} focus={letter.focus}/>
+            {:else if letter.type=='punctuation'}
+                <Punctuation symbol={letter.value}/>
+            {:else if letter.type=='whitespace'}
+                <Space/>
+            {/if}
+        {/each}
 </div>
