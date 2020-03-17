@@ -1,6 +1,6 @@
 <style>
     span {
-            width: 0.3em;
+            width: 1em;
            display: inline-block;
     }
 </style>

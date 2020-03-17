@@ -69,7 +69,7 @@ input {
 </style>
 <div class="field">
     {#if !correct}
-        <input  maxlength="1" size="1" type="text" bind:value="{value}" on:focus={e=>{hover=true}}
+        <input  maxlength="1" size="1" type="text" autocapitalize="none" bind:value="{value}" on:focus={e=>{hover=true}}
         on:focusout={e=>{hover=false}} bind:this={el}>
         <div class={hover ? 'line colorLine':'line'}/>
 
