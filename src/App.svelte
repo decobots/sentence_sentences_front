@@ -110,7 +110,7 @@
 <Hang {errors} {win} {help}/>
 <br/>
 <div class="text">
-
+ {#if !win}
     {#each state as letter,i }
             {#if letter.type=='letter'}
                 <Input
@@ -126,4 +126,7 @@
                 <Space/>
             {/if}
         {/each}
+  {:else }
+  <p>{line}</p>
+   {/if}
 </div>
