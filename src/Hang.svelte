@@ -6,14 +6,14 @@
 </script>
 <style>
 image{
-height: 200px;
+    max-height: 100px;
 }
 .win{
     font-size: 2em;
     color: darkgreen;
 }
 </style>
-<img {src} alt="" />
+<img {src} alt="" height="100px" />
 {#if !win && errors>0}
     <p on:click={help}>help</p>
 {:else if win}

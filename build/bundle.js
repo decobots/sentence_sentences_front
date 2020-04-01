@@ -483,8 +483,8 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "You won!";
-    			attr_dev(p, "class", "win svelte-bbfcuj");
-    			add_location(p, file$1, 19, 4, 365);
+    			attr_dev(p, "class", "win svelte-1mg67bd");
+    			add_location(p, file$1, 19, 4, 388);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -515,7 +515,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "help";
-    			add_location(p, file$1, 17, 4, 316);
+    			add_location(p, file$1, 17, 4, 339);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -573,7 +573,8 @@ var app = (function () {
     			if_block_anchor = empty();
     			if (img.src !== (img_src_value = /*src*/ ctx[3])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 15, 0, 266);
+    			attr_dev(img, "height", "100px");
+    			add_location(img, file$1, 15, 0, 274);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1131,7 +1132,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (165:2) {:else }
+    // (184:2) {:else }
     function create_else_block$1(ctx) {
     	let p;
     	let t;
@@ -1140,7 +1141,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			t = text(/*line*/ ctx[0]);
-    			add_location(p, file$4, 165, 2, 4794);
+    			add_location(p, file$4, 184, 2, 5358);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -1160,14 +1161,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(165:2) {:else }",
+    		source: "(184:2) {:else }",
     		ctx
     	});
 
     	return block;
     }
 
-    // (139:1) {#if !win}
+    // (158:1) {#if !win}
     function create_if_block$2(ctx) {
     	let each_1_anchor;
     	let current;
@@ -1256,21 +1257,21 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(139:1) {#if !win}",
+    		source: "(158:1) {#if !win}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (160:41) 
+    // (179:41) 
     function create_if_block_4(ctx) {
     	let br;
 
     	const block = {
     		c: function create() {
     			br = element("br");
-    			add_location(br, file$4, 160, 16, 4735);
+    			add_location(br, file$4, 179, 16, 5299);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, br, anchor);
@@ -1287,14 +1288,14 @@ var app = (function () {
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(160:41) ",
+    		source: "(179:41) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (158:48) 
+    // (177:48) 
     function create_if_block_3(ctx) {
     	let current;
     	const space_1 = new Space({ $$inline: true });
@@ -1326,14 +1327,14 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(158:48) ",
+    		source: "(177:48) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (156:49) 
+    // (175:49) 
     function create_if_block_2(ctx) {
     	let current;
 
@@ -1373,14 +1374,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(156:49) ",
+    		source: "(175:49) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (148:12) {#if letter.type=='letter'}
+    // (167:12) {#if letter.type=='letter'}
     function create_if_block_1$1(ctx) {
     	let current;
 
@@ -1430,14 +1431,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(148:12) {#if letter.type=='letter'}",
+    		source: "(167:12) {#if letter.type=='letter'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (140:4) {#each state as letter,i }
+    // (159:4) {#each state as letter,i }
     function create_each_block(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -1527,7 +1528,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(140:4) {#each state as letter,i }",
+    		source: "(159:4) {#each state as letter,i }",
     		ctx
     	});
 
@@ -1572,10 +1573,10 @@ var app = (function () {
     			t1 = space();
     			div = element("div");
     			if_block.c();
-    			add_location(br, file$4, 136, 0, 3929);
-    			attr_dev(div, "class", "text svelte-147s3s1");
+    			add_location(br, file$4, 155, 0, 4493);
+    			attr_dev(div, "class", "text svelte-1d0dqtl");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[9].call(div));
-    			add_location(div, file$4, 137, 0, 3936);
+    			add_location(div, file$4, 156, 0, 4500);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1705,7 +1706,7 @@ var app = (function () {
     			$$invalidate(3, errors = errors - 1);
     		}
 
-    		((($$invalidate(2, state), $$invalidate(0, line)), $$invalidate(7, barier)), $$invalidate(1, width));
+    		((($$invalidate(2, state), $$invalidate(7, barier)), $$invalidate(0, line)), $$invalidate(1, width));
     		$$invalidate(4, win = !Boolean(state.find(obj => obj.correct === false)));
     	}
 
@@ -1770,15 +1771,50 @@ var app = (function () {
 
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*width*/ 2) {
-    			 $$invalidate(7, barier = Math.floor(width / 32));
+    			 $$invalidate(7, barier = Math.floor(width / 24));
     		}
 
     		if ($$self.$$.dirty & /*line*/ 1) {
     			 console.log(line);
     		}
 
-    		if ($$self.$$.dirty & /*state, line, barier*/ 133) {
+    		if ($$self.$$.dirty & /*state, barier, line*/ 133) {
     			 {
+    				if (state.length) {
+    					for (let i = 0; i > state.length; i++) {
+    						if (state[i].type === "EOL") {
+    							$$invalidate(2, state[i].type = "whitespace", state);
+    						}
+    					}
+
+    					let p = 0;
+    					let position = 0;
+    					let setflag = 0;
+
+    					while (p < state.length) {
+    						console.log("p=" + p);
+    						position = p + barier;
+    						console.log("pos=" + position);
+
+    						if (position < state.length) {
+    							for (let i = position; i > p; i--) {
+    								if (state[i].type === "whitespace" || state[i].type === "EOL") {
+    									$$invalidate(2, state[i].type = "EOL", state);
+    									console.log("i=" + i);
+    									p = i;
+    									setflag = 1;
+    									break;
+    								}
+    							}
+
+    							if (!setflag) p++;
+    							setflag = 0;
+    						} else break;
+    					}
+
+    					((($$invalidate(2, state), $$invalidate(7, barier)), $$invalidate(0, line)), $$invalidate(1, width));
+    				} //console.log(state)
+
     				if (!state.length) for (let i = 0; i < line.length; i++) {
     					const symbol = line[i];
     					let type = "";
@@ -1804,24 +1840,6 @@ var app = (function () {
     						state
     					);
     				}
-
-    				if (state.length) {
-    					for (let p = 0; p < state.length; p) {
-    						let position = p + barier;
-
-    						if (position < state.length) {
-    							for (let i = position; i > p; i--) {
-    								if (state[i].type === ("whitespace" )) {
-    									$$invalidate(2, state[i].type = "EOL", state);
-    									p = i;
-    									break;
-    								}
-    							}
-    						} else break;
-    					}
-
-    					((($$invalidate(2, state), $$invalidate(0, line)), $$invalidate(7, barier)), $$invalidate(1, width));
-    				} //console.log(state)
     			}
     		}
 

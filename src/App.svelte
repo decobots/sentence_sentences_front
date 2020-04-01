@@ -10,7 +10,7 @@
     let errors = 12;
     let win = false;
 
-	$: barier = Math.floor(width/32);
+	$: barier = Math.floor(width/24);
 	$: console.log(line)
 	$: console.log(state)
 
@@ -21,7 +21,44 @@
 
 
 	$: {
-        if(!state.length)
+
+	    if(state.length){
+	         for(let i = 0; i > state.length; i++){
+                if (state[i].type==='EOL'){
+                    state[i].type='whitespace';
+
+                }
+             }
+
+
+
+	        let p = 0;
+	        let position = 0;
+	        let setflag=0;
+            while (p<state.length){
+                console.log('p='+p)
+                position = p + barier;
+                console.log('pos='+position)
+                if(position < state.length){
+                        for(let i = position; i > p; i--){
+                            if (state[i].type === 'whitespace' || state[i].type==='EOL'){
+                                state[i].type='EOL';
+                                console.log('i='+i)
+                                p = i;
+                                setflag=1;
+                                break;
+                            }
+                         }
+
+                if (!setflag) p++;
+                setflag=0;
+                }
+                else break;
+         }
+             state=state;
+             //console.log(state)
+        }
+                if(!state.length)
 	    for(let i = 0 ; i < line.length; i++){
             const symbol = line[i];
             let type = '';
@@ -35,24 +72,6 @@
                         'focus':false};
 	    }
 
-	    if(state.length){
-
-           for (let p = 0; p < state.length; p){
-                let position = p + barier;
-                if(position < state.length){
-                    for(let i = position; i > p; i--){
-                        if (state[i].type === ('whitespace' || 'EOL' )){
-                            state[i].type='EOL';
-                            p = i;
-                            break;
-                        }
-                    }
-                }
-                else break;
-             }
-             state=state;
-             //console.log(state)
-        }
     }
 
 
@@ -120,7 +139,7 @@
 <style>
     :global(body) {
         background: #efefef;
-
+        min-height: 100vmin;
         margin: 0;
         display: flex;
         flex-direction: column;
