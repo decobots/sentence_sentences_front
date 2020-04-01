@@ -97,7 +97,7 @@
 <style>
     :global(body) {
         background: #efefef;
-        min-height: 100vmin;
+
         margin: 0;
         display: flex;
         justify-content: center;
@@ -108,8 +108,7 @@
         width: 80vw;
     }
 </style>
-<Hang {errors} {win}/>
-<p on:click={help}>help</p>
+<Hang {errors} {win} {help}/>
 <br/>
 <div class="text">
 
