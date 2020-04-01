@@ -5,33 +5,56 @@
     import Punctuation from './Punctuation.svelte';
     import { onMount } from 'svelte';
 	let line = '';
+	let width = 1;
+	let state = [];
+    let errors = 12;
+    let win = false;
+
+	$: barier = Math.floor(width/32);
+	$: console.log(line)
+	$: console.log(state)
+
     onMount(async () => {
 		const res = await fetch(`https://sentencesentences.herokuapp.com/quotes`);
 		line = await res.json();
 	});
 
-    let state = [];
-	$: {
 
-	    for(let i=0;i<line.length;i++){
+	$: {
+        if(!state.length)
+	    for(let i = 0 ; i < line.length; i++){
             const symbol = line[i];
-            let type ='';
+            let type = '';
             let correct = true;
-            if (symbol.match(/[a-zA-zа-яА-Я]/)){type='letter'; correct=false}
-            else if(symbol.match(/\s/)){ type='whitespace';}
-            else{type='punctuation';}
+            if (symbol.match(/[a-zA-zа-яА-Я]/)){type = 'letter'; correct = false}
+            else if(symbol.match(/\s/)){ type = 'whitespace';}
+            else{type = 'punctuation';}
             state[i] = {'type':type,
                         'value':symbol,
                         'correct':correct,
                         'focus':false};
 	    }
-	   }
 
+	    if(state.length){
 
+           for (let p = 0; p < state.length; p){
+                let position = p + barier;
+                if(position < state.length){
+                    for(let i = position; i > p; i--){
+                        if (state[i].type === ('whitespace' || 'EOL' )){
+                            state[i].type='EOL';
+                            p = i;
+                            break;
+                        }
+                    }
+                }
+                else break;
+             }
+             state=state;
+             //console.log(state)
+        }
+    }
 
-
-    let errors = 12;
-    var win = false;
 
     function onGuess(event) {
         // resolve all correct letters
@@ -106,12 +129,22 @@
     div {
         width: 80vw;
     }
+
+
+
 </style>
 <Hang {errors} {win} {help}/>
 <br/>
-<div class="text">
+<div class="text" bind:offsetWidth={width}>
  {#if !win}
     {#each state as letter,i }
+           <!--
+            {#if !state[i-1] || (letter.type==='letter' && state[i-1].type!=='letter') }
+            <p></p>
+
+             {/if}
+           -->
+
             {#if letter.type=='letter'}
                 <Input
                 answer={letter.value}
@@ -124,7 +157,10 @@
                 <Punctuation symbol={letter.value}/>
             {:else if letter.type=='whitespace'}
                 <Space/>
+            {:else if letter.type=='EOL'}
+                <br/>
             {/if}
+
         {/each}
   {:else }
   <p>{line}</p>
